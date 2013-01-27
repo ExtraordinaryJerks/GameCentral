@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "Pacman";
+}
+
+<script src="~/Scripts/Box2dWeb-2.1.a.3.js"></script>
+<script src="~/Scripts/Threeguyz.Input.js"></script>
+<script src="~/Scripts/Threeguyz.AbstractActor.js"></script>
+<script src="~/Scripts/pacman.js"></script>
+<script src="~/Scripts/blinky.js"></script>
+<script src="~/Scripts/pinky.js"></script>
+
+<script type="text/javascript">
+    var canvas, stage, pacman, blinky, pinky, isMoving, isEnded;
+    var ticker = new Object();
+
+
+    $(document).ready(function () {
+        document.addEventListener('keydown', function (event) { Threeguyz.Input.Keyboard.onKeydown(event); }, false);
+        document.addEventListener('keyup', function (event) { Threeguyz.Input.Keyboard.onKeyup(event); }, false);
+
+
+        canvas = document.getElementById("canvas");
+        stage = new createjs.Stage(canvas);
+
+        pacman = new Pacman();
+        blinky = new Blinky();
+        pinky = new Pinky();
+
+
+        pacman.x = 12.5;
+        pacman.y = 12.5;
+
+        blinky.x = 12.5;
+        blinky.y = 42.5;
+
+        pinky.x = 12.5;
+        pinky.y = 67.5;
+
+        pacman.idle();
+        blinky.idle();
+        pinky.idle();
+
+        isMoving = false;
+        isEnded = false;
+
+        stage.addChild(pacman);
+        stage.addChild(blinky);
+        stage.addChild(pinky);
+
+        createjs.Ticker.setFPS(20);
+        createjs.Ticker.addListener(stage);
+
+        ticker.tick = update;
+
+        createjs.Ticker.addListener(ticker, true);
+    });
+
+    function update() {
+        if (!isEnded) {
+            if (CollisionCheck(pacman, new Array(blinky, pinky))) {
+                alert("pacman : \n xmin = " + pacman.bounds()[0] + "\n xmax = " + pacman.bounds()[1] + "\n ymin = " + pacman.bounds()[2] + "\n ymax =" + pacman.bounds()[3] + "\n\n blinky : \n xmin = " + blinky.bounds()[0] + "\n xmax = " + blinky.bounds()[1] + "\n ymin = " + blinky.bounds()[2] + "\n ymax =" + blinky.bounds()[3]);
+                isEnded = true;
+            }
+        }
+
+        if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.LEFT) && !isEnded) {
+            pacman.left(180);
+            blinky.left(0);
+            pinky.left(0);
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.RIGHT) && !isEnded) {
+            pacman.right(0);
+            blinky.right(0);
+            pinky.right(0);
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.UP) && !isEnded) {
+            pacman.up(270);
+            blinky.up(0);
+            pinky.up(0);
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.DOWN) && !isEnded) {
+            pacman.down(90);
+            blinky.down(0);
+            pinky.down(0);
+        } else
+            pacman.idle();
+
+    }
+
+    function CollisionCheck(protagonist, antagonists) {
+        var protagonistBounds = protagonist.bounds();
+
+        for (var i = 0; i < antagonists.length; i++) {
+            var antagonistBounds = antagonists[i].bounds();
+
+            if ((antagonistBounds[2].between(protagonistBounds[2], protagonistBounds[3]) ||
+                antagonistBounds[3].between(protagonistBounds[2], protagonistBounds[3])) &&
+                (antagonistBounds[0].between(protagonistBounds[0], protagonistBounds[1]) ||
+                antagonistBounds[1].between(protagonistBounds[0], protagonistBounds[1]))) {
+                return true;
+            } 
+        }
+        return false;
+    };
+
+    Number.prototype.between = function (first, last) {
+        return (first < last ? this >= first && this <= last : this >= last && this <= first);
+    };
+</script>
+
+<h2>Pacman</h2>
+<h3 id="canvas-width"></h3>
+<h3 id="canvas-height"></h3>
+
+<div>@Html.ActionLink("Back", "Index")</div>
+
+<canvas id="canvas" width="600" height="400" style="background: #000"></canvas>
+

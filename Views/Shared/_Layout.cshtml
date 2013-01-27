@@ -1,0 +1,23 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+
+    <script src="~/Scripts/easeljs-0.5.0.min.js"></script>
+@*    <script type="text/javascript" src="http://code.createjs.com/easeljs-0.5.0.js"></script>*@
+    <script type="text/javascript" src="http://code.createjs.com/tweenjs-0.3.0.min.js"></script>
+    <script type="text/javascript" src="http://code.createjs.com/movieclip-0.5.0.min.js"></script>
+    <script type="text/javascript" src="http://code.createjs.com/soundjs-0.3.0.min.js"></script>
+    <script type="text/javascript" src="http://code.createjs.com/preloadjs-0.2.0.min.js"></script>
+</head>
+<body>
+    @RenderBody()
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
