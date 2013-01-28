@@ -25,5 +25,5 @@ var Blinky_p = Blinky.prototype = new Threeguyz.AbstractActor();
 Blinky_p.AbstractActor_initialize = Blinky_p.initialize;
 
 Blinky_p.initialize = function () {
-    this.AbstractActor_initialize(new createjs.SpriteSheet(BlinkySpriteSheet), $("#canvas"), 15, 25, 25);
+    this.AbstractActor_initialize(new createjs.SpriteSheet(BlinkySpriteSheet), $("#canvas"), 25, 25, 25);
 };

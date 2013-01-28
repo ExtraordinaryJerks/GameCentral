@@ -25,7 +25,7 @@
         pacman = new Pacman();
         blinky = new Blinky();
         pinky = new Pinky();
-
+        var text = new createjs.Text(" Pacman Velocity : \t" + pacman.velocity() + "\n Blinky Velocity : \t\t\t\t" + blinky.velocity() + "\n Pinky Velocity : \t\t\t\t\t" + pinky.velocity(), "Bold 15px Arial", "#F00")
 
         pacman.x = 12.5;
         pacman.y = 12.5;
@@ -35,6 +35,8 @@
 
         pinky.x = 12.5;
         pinky.y = 67.5;
+
+        text.x = 12.5;
 
         pacman.idle();
         blinky.idle();
@@ -46,22 +48,25 @@
         stage.addChild(pacman);
         stage.addChild(blinky);
         stage.addChild(pinky);
+        stage.addChild();
 
-        createjs.Ticker.setFPS(20);
+        createjs.Ticker.setFPS(8);
         createjs.Ticker.addListener(stage);
 
         ticker.tick = update;
 
         createjs.Ticker.addListener(ticker, true);
+
     });
 
     function update() {
         if (!isEnded) {
             if (CollisionCheck(pacman, new Array(blinky, pinky))) {
-                alert("pacman : \n xmin = " + pacman.bounds()[0] + "\n xmax = " + pacman.bounds()[1] + "\n ymin = " + pacman.bounds()[2] + "\n ymax =" + pacman.bounds()[3] + "\n\n blinky : \n xmin = " + blinky.bounds()[0] + "\n xmax = " + blinky.bounds()[1] + "\n ymin = " + blinky.bounds()[2] + "\n ymax =" + blinky.bounds()[3]);
+                //alert("pacman : \n xmin = " + pacman.bounds()[0] + "\n xmax = " + pacman.bounds()[1] + "\n ymin = " + pacman.bounds()[2] + "\n ymax =" + pacman.bounds()[3] + "\n\n blinky : \n xmin = " + blinky.bounds()[0] + "\n xmax = " + blinky.bounds()[1] + "\n ymin = " + blinky.bounds()[2] + "\n ymax =" + blinky.bounds()[3]);
                 isEnded = true;
             }
         }
+
 
         if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.LEFT) && !isEnded) {
             pacman.left(180);
@@ -82,6 +87,9 @@
         } else
             pacman.idle();
 
+        $("#velocity").html("Pacman Velocity : " + pacman.velocity() + "<br />Blinky Velocity : " + blinky.velocity() + "<br />Pinky Velocity : " + pinky.velocity());
+        $("#mouse-position").html("Mouse Position <br> x : " + stage.mouseX + "<br> y : " + stage.mouseY);
+
     }
 
     function CollisionCheck(protagonist, antagonists) {
@@ -95,7 +103,7 @@
                 (antagonistBounds[0].between(protagonistBounds[0], protagonistBounds[1]) ||
                 antagonistBounds[1].between(protagonistBounds[0], protagonistBounds[1]))) {
                 return true;
-            } 
+            }
         }
         return false;
     };
@@ -103,6 +111,7 @@
     Number.prototype.between = function (first, last) {
         return (first < last ? this >= first && this <= last : this >= last && this <= first);
     };
+
 </script>
 
 <h2>Pacman</h2>
@@ -110,6 +119,9 @@
 <h3 id="canvas-height"></h3>
 
 <div>@Html.ActionLink("Back", "Index")</div>
-
-<canvas id="canvas" width="600" height="400" style="background: #000"></canvas>
+<div>
+    <div id="velocity" style="display: inline-block; border: 1px solid blue;"></div>
+    <div id="mouse-position" style="display: inline-block; border: 1px solid blue;"></div>
+</div>
+<canvas id="canvas" width="600" height="600" style="background: #000"></canvas>
 

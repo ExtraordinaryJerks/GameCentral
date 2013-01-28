@@ -16,6 +16,7 @@
             this.movementPixelCount = movementPixelCount;
             this.BitmapAnimation_initialize(spriteSheet);
             this._SpriteSheet = new createjs.SpriteSheet(spriteSheet);
+            this.interval = createjs.Ticker.getInterval();
         };
 
         AbstractActor_p.idle = function () {
@@ -95,6 +96,11 @@
 
             return new Array(xmin, xmax, ymin, ymax);
 
+        };
+
+        AbstractActor_p.velocity = function () {
+            
+            return this.movementPixelCount / this.interval;
         };
     Threeguyz.AbstractActor = AbstractActor;
 }());

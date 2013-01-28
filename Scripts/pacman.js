@@ -25,5 +25,11 @@ var Pacman_p = Pacman.prototype = new Threeguyz.AbstractActor();
 Pacman_p.AbstractActor_initialize = Pacman_p.initialize;
 
 Pacman_p.initialize = function () {
-    this.AbstractActor_initialize(new createjs.SpriteSheet(PacmanSpriteSheet), $("#canvas"), 7, 25, 25);
+    //debugger;
+    this.AbstractActor_initialize(new createjs.SpriteSheet(PacmanSpriteSheet), $("#canvas"), 25, 25, 25);
+    //this.cache(0, 0, 25, 25);
+    //this.updateCache();
+    //var bbfilter = new createjs.BoxBlurFilter(25, 25, 2);
+
+    //this.filters = [bbfilter];
 };
