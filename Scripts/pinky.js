@@ -25,5 +25,5 @@ var Pinky_p = Pinky.prototype = new Threeguyz.AbstractActor();
 Pinky_p.AbstractActor_initialize = Pinky_p.initialize;
 
 Pinky_p.initialize = function () {
-    this.AbstractActor_initialize(new createjs.SpriteSheet(PinkySpriteSheet), $("#canvas"), 25, 25, 25);
+    this.AbstractActor_initialize(new createjs.SpriteSheet(PinkySpriteSheet), $("#canvas"), 12.5, 25, 25);
 };

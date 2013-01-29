@@ -26,7 +26,7 @@ Pacman_p.AbstractActor_initialize = Pacman_p.initialize;
 
 Pacman_p.initialize = function () {
     //debugger;
-    this.AbstractActor_initialize(new createjs.SpriteSheet(PacmanSpriteSheet), $("#canvas"), 25, 25, 25);
+    this.AbstractActor_initialize(new createjs.SpriteSheet(PacmanSpriteSheet), $("#canvas"), 12.5, 25, 25);
     //this.cache(0, 0, 25, 25);
     //this.updateCache();
     //var bbfilter = new createjs.BoxBlurFilter(25, 25, 2);

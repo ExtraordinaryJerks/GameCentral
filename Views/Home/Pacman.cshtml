@@ -10,7 +10,7 @@
 <script src="~/Scripts/pinky.js"></script>
 
 <script type="text/javascript">
-    var canvas, stage, pacman, blinky, pinky, isMoving, isEnded;
+    var canvas, stage, pacman, blinky, pinky, isMoving, roundEnded;
     var ticker = new Object();
 
 
@@ -30,8 +30,8 @@
         pacman.x = 12.5;
         pacman.y = 12.5;
 
-        blinky.x = 12.5;
-        blinky.y = 42.5;
+        blinky.x = 400;
+        blinky.y = 350;
 
         pinky.x = 12.5;
         pinky.y = 67.5;
@@ -43,14 +43,14 @@
         pinky.idle();
 
         isMoving = false;
-        isEnded = false;
+        roundEnded = false;
 
         stage.addChild(pacman);
         stage.addChild(blinky);
         stage.addChild(pinky);
         stage.addChild();
 
-        createjs.Ticker.setFPS(8);
+        createjs.Ticker.setFPS(15);
         createjs.Ticker.addListener(stage);
 
         ticker.tick = update;
@@ -60,29 +60,31 @@
     });
 
     function update() {
-        if (!isEnded) {
+
+        blinky.move(pacman.x, pacman.y);
+
+        if (!roundEnded) {
             if (CollisionCheck(pacman, new Array(blinky, pinky))) {
-                //alert("pacman : \n xmin = " + pacman.bounds()[0] + "\n xmax = " + pacman.bounds()[1] + "\n ymin = " + pacman.bounds()[2] + "\n ymax =" + pacman.bounds()[3] + "\n\n blinky : \n xmin = " + blinky.bounds()[0] + "\n xmax = " + blinky.bounds()[1] + "\n ymin = " + blinky.bounds()[2] + "\n ymax =" + blinky.bounds()[3]);
-                isEnded = true;
+                roundEnded = true;
             }
         }
 
 
-        if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.LEFT) && !isEnded) {
+        if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.LEFT) && !roundEnded) {
             pacman.left(180);
-            blinky.left(0);
+            //blinky.left(0);
             pinky.left(0);
-        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.RIGHT) && !isEnded) {
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.RIGHT) && !roundEnded) {
             pacman.right(0);
-            blinky.right(0);
+            //blinky.right(0);
             pinky.right(0);
-        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.UP) && !isEnded) {
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.UP) && !roundEnded) {
             pacman.up(270);
-            blinky.up(0);
+            //blinky.up(0);
             pinky.up(0);
-        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.DOWN) && !isEnded) {
+        } else if (Threeguyz.Input.Keyboard.isPressedAndLatest(Threeguyz.Input.Keyboard.DOWN) && !roundEnded) {
             pacman.down(90);
-            blinky.down(0);
+            //blinky.down(0);
             pinky.down(0);
         } else
             pacman.idle();
